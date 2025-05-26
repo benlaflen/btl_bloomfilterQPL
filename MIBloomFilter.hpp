@@ -119,7 +119,7 @@ class MIBloomFilter
 	/*
 	 * Constructor using a prebuilt bitvector
 	 */
-	MIBloomFilter<T>(
+	MIBloomFilter(
 	    unsigned hashNum,
 	    unsigned kmerSize,
 	    sdsl::bit_vector& bv,
@@ -146,7 +146,7 @@ class MIBloomFilter
 		m_data = new T[m_dSize]();
 	}
 
-	MIBloomFilter<T>(const string& filterFilePath)
+	MIBloomFilter(const string& filterFilePath)
 	{
 #pragma omp parallel for
 		for (unsigned i = 0; i < 2; ++i) {

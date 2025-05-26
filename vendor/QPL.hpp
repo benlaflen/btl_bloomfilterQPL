@@ -15,9 +15,9 @@ inline uint32_t perform_bitwise_and_sum(const uint8_t* source1,
     qpl_init_job(qpl_path_software, job);
 
     // Setup the job parameters for select operation
-    job->next_in_ptr        = const_cast<uint8_t*>source1;
+    job->next_in_ptr        = const_cast<uint8_t*>(source1);
     job->available_in       = (num_bits + 7) / 8;   // bytes
-    job->next_src2_ptr      = const_cast<uint8_t*>source2_mask;
+    job->next_src2_ptr      = const_cast<uint8_t*>(source2_mask);
     job->available_src2     = (num_bits + 7) / 8;   // bytes
     job->src1_bit_width     = 1;
     job->src2_bit_width     = 1;
