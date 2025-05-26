@@ -1,5 +1,5 @@
-#ifndef NTHASH__ITERATOR_H
-#define NTHASH__ITERATOR_H 1
+#ifndef NTHASH__ITERATOR_QPL_H
+#define NTHASH__ITERATOR_QPL_H 1
 
 #include <string>
 #include <limits>
