@@ -15,7 +15,7 @@
  * hash values for successive k-mers.
  */
 
-class ntHashIterator
+class ntHashIteratorQPL
 {
 
 public:
@@ -24,7 +24,7 @@ public:
      * Default constructor. Creates an iterator pointing to
      * the end of the iterator range.
     */
-    ntHashIterator():
+    ntHashIteratorQPL():
         m_hVec(NULL),
         m_pos(std::numeric_limits<std::size_t>::max())
     {}
@@ -36,14 +36,14 @@ public:
      * @param h number of hashes
      * @param s size of filter in bytes
     */
-    ntHashIterator(const std::string& seq, unsigned h, unsigned k, unsigned s, size_t pos = 0):
+    ntHashIteratorQPL(const std::string& seq, unsigned h, unsigned k, unsigned s, size_t pos = 0):
         m_seq(seq), m_h(h), m_k(k), m_hVec(new uint64_t[s/8]), m_pos(pos), m_s(s)
     {
         init();
     }
     
     /** Copy constructor */
-    ntHashIterator(const ntHashIterator &nth)
+    ntHashIteratorQPL(const ntHashIteratorQPL &nth)
     {
         m_seq = nth.m_seq;
         m_h = nth.m_h;
@@ -98,32 +98,32 @@ public:
     }
 
     /** test equality with another iterator */
-    bool operator==(const ntHashIterator& it) const
+    bool operator==(const ntHashIteratorQPL& it) const
     {
         return m_pos == it.m_pos;
     }
 
     /** test inequality with another iterator */
-    bool operator!=(const ntHashIterator& it) const
+    bool operator!=(const ntHashIteratorQPL& it) const
     {
         return !(*this == it);
     }
 
     /** pre-increment operator */
-    ntHashIterator& operator++()
+    ntHashIteratorQPL& operator++()
     {
         next();
         return *this;
     }
 
     /** iterator pointing to one past last element */
-    static const ntHashIterator end()
+    static const ntHashIteratorQPL end()
     {
-        return ntHashIterator();
+        return ntHashIteratorQPL();
     }
 
     /** destructor */
-    ~ntHashIterator() {
+    ~ntHashIteratorQPL() {
         if(m_hVec!=NULL)
             delete [] m_hVec;
     }
