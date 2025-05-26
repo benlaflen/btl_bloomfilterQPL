@@ -65,7 +65,7 @@ public:
             return;
         }
         unsigned locN=0;
-        while (m_pos<m_seq.length()-m_k+1 && !NTMC64QPL(m_seq.data()+m_pos, m_k, m_h, m_fhVal, m_rhVal, locN, m_hVec))
+        while (m_pos<m_seq.length()-m_k+1 && !NTMC64QPL(m_seq.data()+m_pos, m_k, m_h, m_s, m_fhVal, m_rhVal, locN, m_hVec))
             m_pos+=locN+1;
         if (m_pos >= m_seq.length()-m_k+1)
             m_pos = std::numeric_limits<std::size_t>::max();
@@ -84,7 +84,7 @@ public:
             init();
         }
         else
-            NTMC64QPL(m_seq.at(m_pos-1), m_seq.at(m_pos-1+m_k), m_k, m_h, m_fhVal, m_rhVal, m_hVec);
+            NTMC64QPL(m_seq.at(m_pos-1), m_seq.at(m_pos-1+m_k), m_k, m_h, m_s, m_fhVal, m_rhVal, m_hVec);
     }
     
     size_t pos() const{

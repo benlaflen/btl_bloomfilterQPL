@@ -590,7 +590,7 @@ inline void NTMC64(const unsigned char charOut, const unsigned char charIn, cons
 }
 
 // canonical multihash ntHash for sliding k-mers using QPL *****
-inline void NTMC64QPL(const unsigned char charOut, const unsigned char charIn, const unsigned k, const unsigned m, uint64_t& fhVal, uint64_t& rhVal, uint64_t *hVal) {
+inline void NTMC64QPL(const unsigned char charOut, const unsigned char charIn, const unsigned k, const unsigned m, const unsigned s, uint64_t& fhVal, uint64_t& rhVal, uint64_t *hVal) {
     memset(hVal, 0, s);
     const uint64_t totalBits = s * 8;
     const uint64_t bVal = NTC64(charOut, charIn, k, fhVal, rhVal);
@@ -708,7 +708,7 @@ inline bool NTMC64(const char *kmerSeq, const unsigned k, const unsigned m, uint
 }
 
 // canonical multihash ntHash using QPL *****
-inline bool NTMC64QPL(const char *kmerSeq, const unsigned k, const unsigned m, uint64_t& fhVal, uint64_t& rhVal, unsigned& locN, uint64_t* hVal) {
+inline bool NTMC64QPL(const char *kmerSeq, const unsigned k, const unsigned m, const unsigned s, uint64_t& fhVal, uint64_t& rhVal, unsigned& locN, uint64_t* hVal) {
     fhVal=rhVal=0;
     uint64_t bVal=0, tVal=0;
     locN=0;
@@ -729,14 +729,13 @@ inline bool NTMC64QPL(const char *kmerSeq, const unsigned k, const unsigned m, u
 
     memset(hVal, 0, s);
     const uint64_t totalBits = s * 8;
-    const uint64_t bVal = NTC64(charOut, charIn, k, fhVal, rhVal);
     uint64_t bitIdx = bVal % totalBits;
     hVal[bitIdx >> 6] |= 1ULL << (bitIdx & 63);
     for (unsigned i = 1; i < m; ++i) {
-        uint64_t hash = bVal * (i ^ (k * multiSeed));
-        hash ^= hash >> multiShift;
+        tVal = bVal * (i ^ (k * multiSeed));
+        tVal ^= tVal >> multiShift;
 
-        bitIdx = hash % totalBits;
+        bitIdx = tVal % totalBits;
         hVal[bitIdx >> 6] |= 1ULL << (bitIdx & 63);
     }
 }
