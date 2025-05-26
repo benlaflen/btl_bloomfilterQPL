@@ -738,6 +738,7 @@ inline bool NTMC64QPL(const char *kmerSeq, const unsigned k, const unsigned m, c
         bitIdx = tVal % totalBits;
         hVal[bitIdx >> 6] |= 1ULL << (bitIdx & 63);
     }
+    return true;
 }
 
 // strand-aware canonical multihash ntHash
