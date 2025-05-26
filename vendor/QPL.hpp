@@ -12,7 +12,7 @@ inline uint32_t perform_bitwise_and_sum(const uint8_t* source1,
     qpl_get_job_size(qpl_path_hardware, &job_size);
     auto job_buffer = std::make_unique<uint8_t[]>(job_size);
     job = reinterpret_cast<qpl_job*>(job_buffer.get());
-    qpl_init_job(qpl_path_software, job);
+    qpl_init_job(qpl_path_hardware, job);
 
     // Setup the job parameters for select operation
     job->next_in_ptr        = const_cast<uint8_t*>source1;
