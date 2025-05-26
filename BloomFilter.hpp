@@ -46,6 +46,7 @@ class BloomFilter
 	 */
 	BloomFilter()
 	  : m_filter(NULL)
+	  , m_qpl_buffer(NULL)
 	  , m_size(0)
 	  , m_sizeInBytes(0)
 	  , m_hashNum(0)
@@ -65,6 +66,7 @@ class BloomFilter
 	 */
 	BloomFilter(size_t filterSize, unsigned hashNum, unsigned kmerSize)
 	  : m_filter(NULL)
+	  , m_qpl_buffer(NULL)
 	  , m_size(filterSize)
 	  , m_hashNum(hashNum)
 	  , m_kmerSize(kmerSize)
@@ -101,6 +103,7 @@ class BloomFilter
 
 	BloomFilter(const string& filterFilePath)
 	  : m_filter(NULL)
+	  , m_qpl_buffer(NULL)
 	{
 		loadFilter(filterFilePath);
 	}
@@ -112,6 +115,7 @@ class BloomFilter
 		loadHeader(file);
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
 		file.read(reinterpret_cast<char*>(m_filter), m_sizeInBytes);
+		m_qpl_buffer = new uint8_t[m_sizeInBytes];
 		assert_good(file, filterFilePath);
 		file.close();
 	}
@@ -388,7 +392,7 @@ class BloomFilter
 
 	uint64_t sizeInBytes() const { return m_sizeInBytes; }
 
-	~BloomFilter() { delete[] m_filter; }
+	~BloomFilter() { delete[] m_filter; delete[] m_qpl_buffer}
 
   protected:
 	BloomFilter(const BloomFilter& that); // to prevent copy construction
@@ -405,6 +409,10 @@ class BloomFilter
 		m_sizeInBytes = size / bitsPerChar;
 		if (m_filter != NULL)
 			delete[] m_filter;
+		if (m_qpl_buffer)
+			delete[] m_qpl_buffer;
+
+		m_qpl_buffer = new uint8_t[m_sizeInBytes];
 		m_filter = new unsigned char[m_sizeInBytes]();
 	}
 
@@ -444,6 +452,7 @@ class BloomFilter
 	double calcFPR_hashNum(unsigned hashFunctNum) const { return pow(2, -double(hashFunctNum)); }
 
 	uint8_t* m_filter;
+	uint8_t* m_qpl_buffer;
 	size_t m_size;
 	size_t m_sizeInBytes;
 	unsigned m_hashNum;
