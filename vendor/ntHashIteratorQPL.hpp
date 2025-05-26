@@ -37,7 +37,7 @@ public:
      * @param s size of filter in bytes
     */
     ntHashIteratorQPL(const std::string& seq, unsigned h, unsigned k, unsigned s, size_t pos = 0):
-        m_seq(seq), m_h(h), m_k(k), m_hVec(new uint64_t[s/8]), m_pos(pos), m_s(s)
+        m_seq(seq), m_h(h), m_k(k), m_hVec(new uint64_t[s/8]), m_s(s), m_pos(pos)
     {
         init();
     }
