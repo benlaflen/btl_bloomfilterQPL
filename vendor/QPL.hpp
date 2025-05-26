@@ -32,7 +32,7 @@ inline uint32_t perform_bitwise_and_sum(const uint8_t* source1,
     job->num_input_elements = num_bits;
     job->op                 = qpl_op_select;
     job->out_bit_width      = qpl_ow_nom;
-    job->next_out_ptr       = nullptr;
+    job->next_out_ptr       = const_cast<uint8_t*>(source1);
     job->available_out      = 0;
 
     qpl_status status = qpl_execute_job(job);
