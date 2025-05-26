@@ -272,7 +272,7 @@ class BloomFilter
 	bool containsQPL(const uint64_t *precomputed) const
 	{
 		const uint8_t* bytes = reinterpret_cast<const uint8_t*>(precomputed);
-		return perform_bitwise_and_sum(bytes, m_filter, m_size*8) == m_hashNum;
+		return perform_bitwise_and_sum(bytes, m_filter, m_qpl_buffer, m_size*8) == m_hashNum;
 	}
 
 	void writeHeader(std::ostream& out) const
