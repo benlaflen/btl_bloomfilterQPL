@@ -1,6 +1,6 @@
 #include <vector>
 #include <memory>
-#include "qpl/qpl.h"
+#include <qpl/qpl.h>
 
 inline uint32_t perform_bitwise_and_sum(const uint8_t* source1, 
                                  const uint8_t* source2_mask,
