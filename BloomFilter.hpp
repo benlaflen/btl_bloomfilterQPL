@@ -11,6 +11,7 @@
 
 #include "vendor/IOUtil.h"
 #include "vendor/cpptoml/include/cpptoml.h"
+#include "vendor/QPL.hpp"
 
 #include <cassert>
 #include <cstdlib>
@@ -259,6 +260,14 @@ class BloomFilter
 			}
 		}
 		return true;
+	}
+
+	/*
+	 * Accepts a list of precomputed hash values. Faster than rehashing each time.
+	 */
+	bool containsQPL(const uint64_t *precomputed) const
+	{
+		return perform_bitwise_and_sum(precomputed, m_filter, m_size*8) == m_hashNum;
 	}
 
 	void writeHeader(std::ostream& out) const
