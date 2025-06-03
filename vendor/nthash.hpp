@@ -579,6 +579,7 @@ inline void NTMC64(const char * kmerSeq, const unsigned k, const unsigned m, uin
 
 // canonical multihash ntHash for sliding k-mers
 inline void NTMC64(const unsigned char charOut, const unsigned char charIn, const unsigned k, const unsigned m, uint64_t& fhVal, uint64_t& rhVal, uint64_t *hVal) {
+    auto start = std::chrono::high_resolution_clock::now();
     uint64_t bVal=0, tVal=0;
     bVal = NTC64(charOut, charIn, k, fhVal, rhVal);
     hVal[0] = bVal;
@@ -587,6 +588,9 @@ inline void NTMC64(const unsigned char charOut, const unsigned char charIn, cons
         tVal ^= tVal >> multiShift;
         hVal[i] =  tVal;
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::micro> elapsed = end - start;
+    std::cout<<"Hashing took: " << elapsed.count() << "us\n\n";
 }
 
 // canonical multihash ntHash for sliding k-mers using QPL *****

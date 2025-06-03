@@ -257,14 +257,19 @@ class BloomFilter
 	 */
 	bool contains(const uint64_t precomputed[]) const
 	{
+		auto start = std::chrono::high_resolution_clock::now();
+		bool truth = true;
 		for (unsigned i = 0; i < m_hashNum; ++i) {
 			uint64_t normalizedValue = precomputed[i] % m_size;
 			unsigned char bit = bitMask[normalizedValue % bitsPerChar];
 			if ((m_filter[normalizedValue / bitsPerChar] & bit) != bit) {
-				return false;
+				truth = false;
 			}
 		}
-		return true;
+		auto end = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double, std::micro> elapsed = end - start;
+		std::cout<<"Hashing took: " << elapsed.count() << "us\n\n";
+		return truth;
 	}
 
 	/*
