@@ -84,12 +84,13 @@ public:
             m_pos+=m_k;
             init();
         }
-        else
+        else {
             auto start = std::chrono::high_resolution_clock::now();
             NTMC64QPL(m_seq.at(m_pos-1), m_seq.at(m_pos-1+m_k), m_k, m_h, m_s, m_fhVal, m_rhVal, m_hVec);
             auto end = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double, std::micro> elapsed = end - start;
             std::cout<<"Hashing took: " << elapsed.count() << "us\n\n";
+        }
     }
     
     size_t pos() const{
