@@ -4,6 +4,7 @@
 #include <string>
 #include <limits>
 #include "nthash.hpp"
+#include <chrono>
 
 
 /**
