@@ -726,8 +726,11 @@ inline bool NTMC64QPL(const char *kmerSeq, const unsigned k, const unsigned m, c
         rhVal ^= seedTab[(unsigned char)kmerSeq[i]&cpOff];
     }
     bVal = (rhVal<fhVal)? rhVal : fhVal;
-
+    auto start = std::chrono::high_resolution_clock::now();
     memset(hVal, 0, s);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std:micro> elapsed = end - start;
+    stdout<<"Memset 0 took: " << elapsed.count() << "us\n\n";
     const uint64_t totalBits = s * 8;
     uint64_t bitIdx = bVal % totalBits;
     hVal[bitIdx >> 6] |= 1ULL << (bitIdx & 63);

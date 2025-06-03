@@ -24,6 +24,7 @@
 #include <string>
 #include <sys/stat.h>
 #include <vector>
+#include <chrono>
 
 using namespace std;
 
@@ -272,7 +273,11 @@ class BloomFilter
 	bool containsQPL(const uint64_t *precomputed) const
 	{
 		const uint8_t* bytes = reinterpret_cast<const uint8_t*>(precomputed);
+		auto start = std::chrono::high_resolution_clock::now();
 		return perform_bitwise_and_sum(bytes, m_filter, m_qpl_buffer, m_size*8) == m_hashNum;
+		auto end = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double, std:micro> elapsed = end - start;
+		stdout<<"QPL job took: " << elapsed.count() << "us\n\n";
 	}
 
 	void writeHeader(std::ostream& out) const
