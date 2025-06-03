@@ -242,7 +242,7 @@ class BloomFilter
 	 */
 	bool contains(vector<uint64_t> const& precomputed) const
 	{
-		auto end = std::chrono::high_resolution_clock::now();
+		auto start = std::chrono::high_resolution_clock::now();
 		bool truth = true;
 		for (unsigned i = 0; i < m_hashNum; ++i) {
 			uint64_t normalizedValue = precomputed.at(i) % m_size;
