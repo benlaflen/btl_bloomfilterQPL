@@ -277,7 +277,7 @@ class BloomFilter
 		return perform_bitwise_and_sum(bytes, m_filter, m_qpl_buffer, m_size*8) == m_hashNum;
 		auto end = std::chrono::high_resolution_clock::now();
 		std::chrono::duration<double, std::micro> elapsed = end - start;
-		stdout<<"QPL job took: " << elapsed.count() << "us\n\n";
+		std::cout<<"QPL job took: " << elapsed.count() << "us\n\n";
 	}
 
 	void writeHeader(std::ostream& out) const
