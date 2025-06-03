@@ -242,14 +242,20 @@ class BloomFilter
 	 */
 	bool contains(vector<uint64_t> const& precomputed) const
 	{
+		auto start = std::chrono::high_resolution_clock::now();
+		bool truth = true;
 		for (unsigned i = 0; i < m_hashNum; ++i) {
 			uint64_t normalizedValue = precomputed.at(i) % m_size;
 			unsigned char bit = bitMask[normalizedValue % bitsPerChar];
 			if ((m_filter[normalizedValue / bitsPerChar] & bit) != bit) {
-				return false;
+				truth = false;
+				break;
 			}
 		}
-		return true;
+		auto end = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double, std::micro> elapsed = end - start;
+		std::cout<<"Contains took: " << elapsed.count() << "us\n\n";
+		return truth;
 	}
 
 	/*
@@ -257,14 +263,20 @@ class BloomFilter
 	 */
 	bool contains(const uint64_t precomputed[]) const
 	{
+		auto start = std::chrono::high_resolution_clock::now();
+		bool truth = true;
 		for (unsigned i = 0; i < m_hashNum; ++i) {
 			uint64_t normalizedValue = precomputed[i] % m_size;
 			unsigned char bit = bitMask[normalizedValue % bitsPerChar];
 			if ((m_filter[normalizedValue / bitsPerChar] & bit) != bit) {
-				return false;
+				truth = false;
+				break;
 			}
 		}
-		return true;
+		auto end = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<double, std::micro> elapsed = end - start;
+		std::cout<<"Contains took: " << elapsed.count() << "us\n\n";
+		return truth;
 	}
 
 	/*
